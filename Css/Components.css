@@ -1,0 +1,534 @@
+/* Components.css - VERSIÓN UNIFICADA Y RESPONSIVA */
+
+/* ============================================
+   RESET Y BASE
+   ============================================ */
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ============================================
+   CANVAS Y BACKGROUNDS
+   ============================================ */
+
+#colorRain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.background-lights {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ============================================
+   CARD PRINCIPAL - VERSIÓN MEJORADA
+   ============================================ */
+
+.card {
+    width: 90%;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    background: rgba(20, 20, 35, 0.85);
+    backdrop-filter: blur(20px);
+    border-radius: clamp(15px, 3vw, 25px);
+    box-shadow: 0 0 30px rgba(0, 255, 238, 0.4);
+    position: relative;
+    z-index: 10;
+    max-height: calc(100vh - 220px); /* ← NUEVO: Altura máxima */
+    overflow-y: auto; /* ← NUEVO: Scroll si es necesario */
+}
+
+/* Scroll personalizado para el card */
+.card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.card::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 10px;
+}
+
+.card::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.8);
+}
+
+/* ============================================
+   TÍTULO
+   ============================================ */
+
+.title {
+    text-align: center;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    margin-bottom: clamp(1.5rem, 4vw, 2rem);
+    color: #00ffee;
+    font-weight: 800;
+    text-shadow: 0 0 20px rgba(0, 255, 238, 0.6);
+}
+
+/* ============================================
+   FORM GROUPS
+   ============================================ */
+
+.form-group {
+    margin-bottom: clamp(1rem, 3vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: #ffdd00;
+    font-weight: 600;
+}
+
+/* ============================================
+   INPUTS Y TEXTAREA
+   ============================================ */
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: clamp(0.75rem, 2vw, 1rem);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    background: rgba(26, 26, 46, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: clamp(8px, 2vw, 12px);
+    color: white;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+    background: rgba(26, 26, 46, 0.95);
+}
+
+.form-group textarea {
+    min-height: clamp(70px, 15vw, 120px);
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* ============================================
+   DIVIDER
+   ============================================ */
+
+.divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ffee, transparent);
+    margin: clamp(1.5rem, 4vw, 2rem) 0;
+    opacity: 0.6;
+}
+
+/* ============================================
+   READY TEXT
+   ============================================ */
+
+.ready {
+    text-align: center;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: #00ffee;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 255, 238, 0.5);
+}
+
+/* ============================================
+   GENERATED LINK
+   ============================================ */
+
+#generatedLink {
+    width: 100%;
+    padding: clamp(0.75rem, 2vw, 1rem);
+    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+    background: rgba(26, 26, 46, 0.8);
+    border: 2px solid rgba(102, 126, 234, 0.5);
+    border-radius: clamp(8px, 2vw, 12px);
+    color: white;
+    text-align: center;
+    margin-bottom: clamp(1rem, 3vw, 1.5rem);
+    word-break: break-all;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#generatedLink:focus {
+    outline: none;
+    border-color: #00ffee;
+    box-shadow: 0 0 15px rgba(0, 255, 238, 0.5);
+}
+
+/* ============================================
+   BOTONES PRINCIPALES
+   ============================================ */
+
+.btn-group {
+    display: flex;
+    gap: clamp(0.75rem, 2vw, 1rem);
+    justify-content: space-between;
+    margin-top: clamp(0.75rem, 2vw, 1rem);
+}
+
+.btn-outline,
+.btn-primary {
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
+    padding: clamp(0.6rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 700;
+    border-radius: clamp(8px, 2vw, 10px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #ffdd00;
+    color: #ffdd00;
+}
+
+.btn-outline:hover {
+    background: #ffdd00;
+    color: #1a1a2e;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 221, 0, 0.4);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00ffee 0%, #00d4ff 100%);
+    border: none;
+    color: #1a1a2e;
+    font-weight: 700;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 238, 0.6);
+}
+
+.btn-primary:active,
+.btn-outline:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   CONTENEDOR DE MÚSICA
+   ============================================ */
+
+.music-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: clamp(280px, 40vw, 350px);
+    background: rgba(20, 20, 40, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 
+                0 0 20px rgba(102, 126, 234, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.music-container:hover {
+    transform: translateY(-5px);
+}
+
+.music-header {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.music-title {
+    color: #fff;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   AUDIO VISUALIZER
+   ============================================ */
+
+.audio-visualizer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: clamp(60px, 10vw, 80px);
+    gap: clamp(6px, 1.5vw, 10px);
+    margin: 15px 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.bar {
+    width: clamp(8px, 2vw, 12px);
+    height: 20px;
+    background: linear-gradient(to top, #667eea, #764ba2);
+    border-radius: clamp(3px, 1vw, 5px);
+    animation: bounce 0.8s ease-in-out infinite;
+}
+
+.bar:nth-child(1) { animation-delay: 0s; }
+.bar:nth-child(2) { animation-delay: 0.1s; }
+.bar:nth-child(3) { animation-delay: 0.2s; }
+.bar:nth-child(4) { animation-delay: 0.3s; }
+.bar:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 100% { 
+        height: 20px; 
+        opacity: 0.7;
+    }
+    50% { 
+        height: clamp(50px, 10vw, 70px); 
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   BOTÓN DE MÚSICA
+   ============================================ */
+
+.btn-music {
+    width: 100%;
+    padding: clamp(0.75rem, 2vw, 1rem);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: clamp(8px, 2vw, 10px);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-music:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-music:active {
+    transform: scale(0.98);
+}
+
+.btn-music.playing {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    animation: pulse-music 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-music {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+    }
+    50% { 
+        transform: scale(1.05); 
+        box-shadow: 0 6px 25px rgba(240, 147, 251, 0.6);
+    }
+}
+
+/* ============================================
+   MEDIA QUERIES - RESPONSIVE
+   ============================================ */
+
+/* Tablets horizontales (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .card {
+        width: 85%;
+        max-width: 550px;
+    }
+    
+    .music-container {
+        width: 320px;
+    }
+}
+
+/* Tablets verticales (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .card {
+        width: 90%;
+        padding: 2rem 1.5rem;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-outline,
+    .btn-primary {
+        max-width: 100%;
+    }
+    
+    .music-container {
+        bottom: 10px;
+        right: 10px;
+        width: 300px;
+    }
+}
+
+/* Móviles (hasta 480px) */
+@media (max-width: 480px) {
+    body {
+        padding: 1rem 0;
+    }
+    
+    .card {
+        width: 95%;
+        padding: 1.5rem 1rem;
+        margin: 1rem auto;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .btn-outline,
+    .btn-primary {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    
+    .music-container {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
+    
+    .audio-visualizer {
+        height: 60px;
+        gap: 6px;
+    }
+    
+    .bar {
+        width: 8px;
+    }
+}
+
+/* Móviles muy pequeños (hasta 360px) */
+@media (max-width: 360px) {
+    .card {
+        width: 98%;
+        padding: 1rem 0.75rem;
+    }
+    
+    .title {
+        font-size: 1.3rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.9rem;
+    }
+    
+    .btn-outline,
+    .btn-primary {
+        font-size: 0.9rem;
+        padding: 0.7rem 1rem;
+    }
+    
+    .music-container {
+        padding: 0.75rem;
+    }
+}
+
+/* Landscape en móviles */
+@media (max-height: 500px) and (orientation: landscape) {
+    .card {
+        margin: 1rem auto;
+        padding: 1rem;
+    }
+    
+    .music-container {
+        bottom: 5px;
+        right: 5px;
+        width: 250px;
+        padding: 0.75rem;
+    }
+    
+    .audio-visualizer {
+        height: 50px;
+        margin: 10px 0;
+    }
+    
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+}
+
+/* Pantallas grandes (1440px+) */
+@media (min-width: 1440px) {
+    .card {
+        max-width: 700px;
+    }
+    
+    .music-container {
+        width: 380px;
+    }
+}
+
+/* Prevenir zoom en inputs en iOS */
+@media screen and (max-width: 767px) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}

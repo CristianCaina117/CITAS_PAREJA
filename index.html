@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CITA INTERACTIVA - Configuración</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💃</text></svg>">
+    <link rel="stylesheet" href="Css/Base.css">
+    <link rel="stylesheet" href="Css/Layout.css">
+    <link rel="stylesheet" href="Css/Components.css">
+</head>
+<body>
+
+<canvas id="colorRain"></canvas>
+<div class="background-lights"></div>
+
+<div class="card">
+    <h1 class="title">
+        💃 CITA INTERACTIVA 🏓
+    </h1>
+
+    <div class="form-group">
+        <label>Para:</label>
+        <input type="text" id="toName" placeholder="Nombre especial">
+    </div>
+
+    <div class="form-group">
+        <label>De:</label>
+        <input type="text" id="fromName" placeholder="Tu nombre">
+    </div>
+
+    <div class="form-group">
+        <label>Mensaje final:</label>
+        <textarea id="message" placeholder="Escribe algo bonito..."></textarea>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="ready">Tu link está listo ✨</p>
+
+    <input type="text" id="generatedLink" readonly>
+
+    <div class="btn-group">
+        <button id="copyBtn" class="btn-outline">📋 Copiar</button>
+        <button id="testBtn" class="btn-primary">🚀 Probar</button>
+    </div>
+</div>
+
+<!-- Contenedor de música con visualización -->
+<div class="music-container">
+    <div class="music-header">
+        <span class="music-title">🎵 Bésame - Camilo</span>
+    </div>
+    <div class="audio-visualizer">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    <button id="startMusic" class="btn-music">
+        ▶️ Reproducir música
+    </button>
+</div>
+
+<script src="Js/Fireworks.js"></script>
+<script src="Js/Config.js"></script>
+
+</body>
+</html>

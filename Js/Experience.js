@@ -25,7 +25,35 @@ const urlParams = new URLSearchParams(window.location.search);
 const toName = urlParams.get('to') || 'Persona especial';
 const fromName = urlParams.get('from') || 'Alguien especial';
 const finalMessage = urlParams.get('msg') || 'Nos vemos pronto 💫';
+const date1 = urlParams.get('date1') || '';
+const date2 = urlParams.get('date2') || '';
+const date3 = urlParams.get('date3') || '';
+const phoneNumber = urlParams.get('phone') || '';
 
+function formatearFechaBonita(textoFecha) {
+    const diasSemana = [
+        "domingo", "lunes", "martes", "miércoles",
+        "jueves", "viernes", "sábado"
+    ];
+
+    const meses = [
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ];
+
+    // Formato esperado del input date: YYYY-MM-DD
+    if (textoFecha && textoFecha.includes("-")) {
+        const fecha = new Date(textoFecha + "T00:00:00");
+
+        const diaSemana = diasSemana[fecha.getDay()];
+        const dia = fecha.getDate();
+        const mes = meses[fecha.getMonth()];
+
+        return `${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)} ${dia} de ${mes}`;
+    }
+
+    return textoFecha;
+}
 // Log para verificar que se leen correctamente
 console.log('📋 Datos de la URL:');
 console.log('Para:', toName);
@@ -716,29 +744,47 @@ function handleYes() {
     if (hasAnswered) return;
     hasAnswered = true;
 
-        // ===== AGREGAR ESTO =====
     const oldBtnNo = document.getElementById('btnNo');
     if (oldBtnNo) oldBtnNo.remove();
-    // ========================
 
-    document.body.style.background = 'radial-gradient(circle, #ffeaa7 0%, #fdcb6e 50%, #e17055 100%)';
+    document.body.style.background =
+        'radial-gradient(circle, #ffeaa7 0%, #fdcb6e 50%, #e17055 100%)';
     document.body.style.transition = 'background 2s ease';
-    
+
     experienceContainer.innerHTML = `
         <div class="celebration-scene">
             <div class="golden-particles"></div>
             <div class="heart-rain"></div>
             <div class="fireworks-container"></div>
-            
+
             <div class="celebration-header">
                 <p class="celebration-names">${toName} ❤️ ${fromName}</p>
             </div>
-            
+
             <h1 class="celebration-title">¡Sííí! 🎉✨</h1>
+
             <div class="date-reveal">
-                <p class="date-text">Entonces...</p>
-                <h2 class="final-date">Nos vemos el 28, 29 o 1 💫</h2>
+
+                ${
+                    date1 || date2 || date3
+                        ? `
+                <div class="date-selection">
+                    <p class="date-text">Elige el día perfecto 💫</p>
+
+                    <div class="date-options">
+                        ${date1 ? `<button class="date-pill">${date1}</button>` : ''}
+                        ${date2 ? `<button class="date-pill">${date2}</button>` : ''}
+                        ${date3 ? `<button class="date-pill">${date3}</button>` : ''}
+                    </div>
+
+                    <p class="chosen-date-message"></p>
+                </div>
+                `
+                        : ''
+                }
+
                 <p class="final-message">${finalMessage}</p>
+
                 <div class="final-signatures">
                     <p class="signature-love">Con mucho cariño,</p>
                     <p class="signature-name">${fromName} 💕</p>
@@ -748,9 +794,10 @@ function handleYes() {
         </div>
     `;
 
-    // REPRODUCIR CANCIÓN ALEGRE
+    // 🎵 Música alegre
     playAudio('happy');
 
+    // Animaciones principales
     if (typeof gsap !== 'undefined') {
         gsap.from('.celebration-title', {
             duration: 1,
@@ -774,20 +821,69 @@ function handleYes() {
             yoyo: true,
             ease: 'power1.inOut'
         });
+    }
 
-        gsap.from('.celebration-names', {
-            duration: 1,
-            opacity: 0,
-            y: -30,
-            delay: 0.3,
-            ease: 'power2.out'
+    // 🎯 LÓGICA DE SELECCIÓN DE FECHA
+    const dateButtons = document.querySelectorAll('.date-pill');
+    const chosenMessage = document.querySelector('.chosen-date-message');
+
+    if (dateButtons.length > 0) {
+        dateButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+
+                // Desactivar todos
+                dateButtons.forEach(b => b.classList.remove('selected'));
+
+                // Activar seleccionado
+                btn.classList.add('selected');
+
+                const fechaElegida = formatearFechaBonita(btn.textContent);
+
+                // Mensaje dinámico
+                chosenMessage.innerHTML = `
+                    Perfecto 💕 entonces nos vemos el 
+                    <strong>${fechaElegida}</strong>
+                `;
+
+                // Animación bonita
+                if (typeof gsap !== 'undefined') {
+                    gsap.fromTo(chosenMessage,
+                        { opacity: 0, y: 20 },
+                        { opacity: 1, y: 0, duration: 0.8 }
+                    );
+
+                    gsap.to(btn, {
+                        scale: 1.15,
+                        duration: 0.3,
+                        yoyo: true,
+                        repeat: 1
+                    });
+                }
+
+                // 🔒 Bloquear después de elegir
+                dateButtons.forEach(b => b.disabled = true);
+
+                // 📲 ENVIAR A WHATSAPP (si viene número en el link)
+                if (phoneNumber) {
+
+                    const mensaje = `Hola ${fromName} 💕 acepté la cita para el ${fechaElegida} 😍`;
+                    const urlWhatsApp = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(mensaje)}`;
+
+                    setTimeout(() => {
+                        window.open(urlWhatsApp, "_blank");
+                    }, 1500);
+
+                } else {
+                    console.warn("No se recibió número en la URL");
+                }
+
+            });
         });
     }
 
     createGoldenParticles();
     createHeartRain();
     createFireworks();
-    clearAllDynamic();
 }
 
 // [Resto de funciones: animateRain, animateEmojis, createGoldenParticles, createHeartRain, createFireworks - SIN CAMBIOS]

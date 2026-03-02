@@ -487,6 +487,7 @@
 
 .date-reveal {
     background: rgba(255, 255, 255, 0.95);
+     color: #222;
     padding: clamp(25px, 4vw, 40px);
     border-radius: 20px;
     box-shadow: 0 0 25px #ffd70055, 0 20px 60px rgba(0, 0, 0, 0.4);
@@ -653,4 +654,43 @@
     .date-reveal {
         padding: 20px 15px;
     }
+}
+
+.date-selection {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.date-options {
+    margin-top: 15px;
+}
+
+.date-pill {
+    padding: 12px 24px;
+    margin: 8px;
+    border-radius: 40px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+    transition: all .3s ease;
+    font-size: 1em;
+}
+
+.date-pill:hover {
+    transform: scale(1.08);
+    background: rgba(255,255,255,0.5);
+}
+
+.date-pill.selected {
+    background: linear-gradient(135deg, #ff7675, #e84393);
+    color: white;
+    box-shadow: 0 8px 25px rgba(232,67,147,0.6);
+}
+
+.chosen-date-message {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: 600;
 }

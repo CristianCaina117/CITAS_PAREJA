@@ -3,6 +3,10 @@
 const toName = document.getElementById("toName");
 const fromName = document.getElementById("fromName");
 const message = document.getElementById("message");
+const date1 = document.getElementById("date1");
+const date2 = document.getElementById("date2");
+const date3 = document.getElementById("date3");
+const phoneNumber = document.getElementById("phoneNumber");
 const generatedLink = document.getElementById("generatedLink");
 const copyBtn = document.getElementById("copyBtn");
 const testBtn = document.getElementById("testBtn");
@@ -24,14 +28,32 @@ window.addEventListener("DOMContentLoaded", () => {
     const savedFrom = localStorage.getItem("userfromName");
     const savedMsg = localStorage.getItem("usermessage");
     
+    // 🔒 Bloquear fechas pasadas
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    const minDate = today.toISOString().split("T")[0];
+
+    date1.min = minDate;
+    date2.min = minDate;
+    date3.min = minDate;
+   
+
     if (savedTo) toName.value = savedTo;
     if (savedFrom) fromName.value = savedFrom;
     if (savedMsg) message.value = savedMsg;
     
-    // Generar link si hay datos
     if (savedTo && savedFrom) {
         generateLink();
     }
+
+    // 👇 SOLUCIÓN para que todo el input abra el calendario
+    document.querySelectorAll('input[type="date"]').forEach(input => {
+        input.addEventListener('click', function () {
+            if (this.showPicker) {
+                this.showPicker();
+            }
+        });
+    });
 });
 
 // Función para generar link - CORREGIDA PARA VERCEL
@@ -39,35 +61,51 @@ function generateLink() {
     const toValue = toName.value.trim();
     const fromValue = fromName.value.trim();
     const msgValue = message.value.trim() || "Nos vemos pronto 💫";
-    
-    // Validar que los campos obligatorios estén llenos
+
+    const d1 = date1.value.trim();
+    const d2 = date2.value.trim();
+    const d3 = date3.value.trim();
+    let phone = phoneNumber.value.trim();
+
+    // Eliminar todo lo que no sea número
+    phone = phone.replace(/\D/g, "");
+
+    // Si tiene 10 dígitos, asumir Colombia y agregar 57
+    if (phone.length === 10) {
+        phone = "57" + phone;
+    }
+
+    // Validar obligatorios
     if (!toValue || !fromValue) {
         hideElements();
         return;
     }
-    
+
     // Guardar en localStorage
     localStorage.setItem("usertoName", toValue);
     localStorage.setItem("userfromName", fromValue);
     localStorage.setItem("usermessage", msgValue);
-    
-    // GENERAR URL - Compatible con local y Vercel
+    localStorage.setItem("userdate1", d1);
+    localStorage.setItem("userdate2", d2);
+    localStorage.setItem("userdate3", d3);
+
     const currentUrl = window.location.href;
     const baseUrl = currentUrl.split('?')[0].replace('index.html', '');
-    
-    // Construir la URL de experiencia
     const experienceUrl = `${baseUrl}experiencia.html`;
-    
+
     const params = new URLSearchParams({
         to: toValue,
         from: fromValue,
-        msg: msgValue
+        msg: msgValue,
+        date1: d1,
+        date2: d2,
+        date3: d3,
+        phone: phone
     });
-    
+
     const link = `${experienceUrl}?${params.toString()}`;
     generatedLink.value = link;
-    
-    // Mostrar elementos con animación
+
     showElementsAnimated();
 }
 
@@ -129,6 +167,11 @@ function showElementsAnimated() {
 toName.addEventListener("input", generateLink);
 fromName.addEventListener("input", generateLink);
 message.addEventListener("input", generateLink);
+
+date1.addEventListener("input", generateLink);
+date2.addEventListener("input", generateLink);
+date3.addEventListener("input", generateLink);
+phoneNumber.addEventListener("input", generateLink);
 
 // Inicializar audio local
 function initAudio() {

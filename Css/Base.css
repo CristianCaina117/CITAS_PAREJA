@@ -48,3 +48,9 @@ body {
         padding: 0.5rem 0 150px 0;
     }
 }
+.date-pill.selected {
+  background: linear-gradient(45deg, #00f7ff, #ff00ff);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #00f7ff;
+}
